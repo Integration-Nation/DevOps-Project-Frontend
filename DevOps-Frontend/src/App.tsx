@@ -1,7 +1,6 @@
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import AboutPage from './Pages/AboutPage'
-import HomePage from './Pages/HomePage'
 import SearchPage from './Pages/SearchPage'
 
 function App() {
@@ -10,8 +9,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
+          <Route path="/" element={<AboutPage />} />
           <Route path="/search" element={<SearchPage />} />
         </Routes>
       </BrowserRouter>
