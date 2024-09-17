@@ -1,4 +1,4 @@
-function LogoutPage() {
+export default function LogoutPage() {
   const { logout } = useAuth();
   useEffect(() => {
     logout();
