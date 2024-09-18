@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import SearchComponent from '../Components/SearchComponent';
-import { getSearchResults } from '../api/api';
+import { useEffect, useState } from "react";
+import SearchComponent from "../Components/SearchComponent";
+import { getSearchResults } from "../api/api";
 
 interface SearchResult {
   url: string;
@@ -10,7 +10,7 @@ interface SearchResult {
 
 function SearchPage() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [query, setQuery] = useState<string>('');
+  const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
     // Only fetch results if there is a query
@@ -24,7 +24,7 @@ function SearchPage() {
           }
         })
         .catch((error) => {
-          console.error('Error fetching search results:', error);
+          console.error("Error fetching search results:", error);
           setSearchResults([]); // Clear results if there's an error
         });
     } else {
@@ -37,11 +37,9 @@ function SearchPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-gray-50 flex flex-col items-center p-8">
+    <div className="min-h-screen bg-black flex flex-col items-center p-8">
       <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl p-8">
-        <h1 className="text-4xl font-extrabold text-gray-800 text-center mb-6">
-          Search the Web
-        </h1>
+        <h1 className="text-4xl font-extrabold text-gray-800 text-center mb-6">Search the Web</h1>
         {/* Pass search results rendering responsibility to SearchComponent */}
         <SearchComponent searchResults={searchResults} onSearch={handleSearch} />
       </div>
