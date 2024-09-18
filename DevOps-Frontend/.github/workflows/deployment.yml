@@ -1,0 +1,35 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: SSH Command
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} '
+            cd ./${{ secrets.WORK_DIR }} &&
+            git pull https://github.com/Integration-Nation/DevOps-Project-Frontend.git &&
+            cd DevOps-Frontend &&
+            pwd &&
+            ls -a &&
+            docker-compose down && docker-compose build --no-cache && docker-compose up -d
+          '
