@@ -37,9 +37,14 @@ function SearchPage() {
   }
 
   return (
-    <div>
-      <h1>Search Page</h1>
-      <SearchComponent searchResults={searchResults} onSearch={handleSearch} />
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-gray-50 flex flex-col items-center p-8">
+      <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl p-8">
+        <h1 className="text-4xl font-extrabold text-gray-800 text-center mb-6">
+          Search the Web
+        </h1>
+        {/* Pass search results rendering responsibility to SearchComponent */}
+        <SearchComponent searchResults={searchResults} onSearch={handleSearch} />
+      </div>
     </div>
   );
 }
