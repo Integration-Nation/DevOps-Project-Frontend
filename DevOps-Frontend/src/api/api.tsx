@@ -1,4 +1,5 @@
-const endpoint = "http://localhost:9090";
+
+const endpoint = import.meta.env.VITE_ENDPOINT
 
 async function getSearchResults(query: string, language: string = 'en') {
   const response = await fetch(`${endpoint}/api/search?q=${encodeURIComponent(query)}&language=${encodeURIComponent(language)}`);
