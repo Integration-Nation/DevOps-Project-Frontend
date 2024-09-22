@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { registerUser } from '../api/api';
-import { RegisterRequest } from '../api/api';
+import { registerUser } from '../api/api.ts';
+import { RegisterRequest } from '../api/api.ts';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -10,9 +10,14 @@ export default function RegisterPage() {
     password2: ''
   });
 
-  const [error, setError] = useState(null);
+  enum RegisterError {
+    PasswordTooShort = "Password must be at least 8 characters long.",
+    PasswordsDoNotMatch = "Passwords do not match."
+  }
 
-  const handleChange = (e) => {
+const [error, setError] = useState<string | RegisterError | null>(null);
+
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -22,15 +27,15 @@ export default function RegisterPage() {
 
   const validateForm = () => {
     if (formData.password.length < 8) {
-      return "Password must be at least 8 characters long.";
+      return RegisterError.PasswordTooShort;
     }
     if (formData.password !== formData.password2) {
-      return "Passwords do not match.";
+      return RegisterError.PasswordsDoNotMatch;
     }
     return null; // No errors
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const validationError = validateForm();
@@ -51,12 +56,16 @@ export default function RegisterPage() {
 
       //TODO redirect to login page
       
-      // Handle success (e.g., redirect or show success message)
-    } catch (err) {
-      setError(err.message);
+    
+} catch (err: unknown) {
+    // Check if the error is an instance of Error
+    if (err instanceof Error) {
+      setError(err.message); // Safely access the message property
+    } else {
+      setError("An unknown error occurred");
     }
-  };
-
+  }
+};
   return (
     <div className="max-w-md mx-auto mt-10">
       <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>

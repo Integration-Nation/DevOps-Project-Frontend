@@ -6,6 +6,11 @@ email: string,
 password: string,
 
 }
+
+export interface LoginRequest {
+  username: string,
+  password: string
+}
 async function getSearchResults(query: string, language: string = "en") {
   const response = await fetch(`${endpoint}/api/search?q=${encodeURIComponent(query)}&language=${encodeURIComponent(language)}`, {
     method: "POST", // Specify POST method
@@ -36,5 +41,21 @@ async function registerUser(registerRequest: RegisterRequest) {
   return response.json();
 }
 
+async function login(loginRequest: LoginRequest) {
+  const response = await fetch(`${endpoint}/api/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(loginRequest),
+    
+  });
 
-export { getSearchResults, registerUser };
+  if (!response.ok) {
+    throw new Error("Failed to login");
+  }
+
+  return response.json();
+}
+
+export { getSearchResults, registerUser, login };
