@@ -13,7 +13,7 @@ export interface LoginRequest {
 }
 async function getSearchResults(query: string, language: string = "en") {
   const response = await fetch(`${endpoint}/api/search?q=${encodeURIComponent(query)}&language=${encodeURIComponent(language)}`, {
-    method: "POST", // Specify POST method
+    method: "GET", 
   });
 
   if (!response.ok) {
