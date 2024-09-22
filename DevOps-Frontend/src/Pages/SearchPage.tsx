@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import SearchComponent from "../Components/SearchComponent";
-import { getSearchResults } from "../api/api";
+import { getSearchResults } from "../api/api.ts";
 
 interface SearchResult {
   url: string;
