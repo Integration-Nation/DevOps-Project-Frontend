@@ -72,7 +72,6 @@ const [error, setError] = useState<string | RegisterError | null>(null);
       {error && (
         <div className="bg-red-100 text-red-700 p-3 mb-4 rounded">
           <strong>Error:</strong> {error}
-        </div>
       )}
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
