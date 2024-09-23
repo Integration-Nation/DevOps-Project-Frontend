@@ -1,23 +1,23 @@
-import { useState } from 'react';
-import { registerUser } from '../api/api.ts';
-import { RegisterRequest } from '../api/api.ts';
+import { useState } from "react";
+import { registerUser } from "../api/api.ts";
+import { RegisterRequest } from "../api/api.ts";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    password2: ''
+    username: "",
+    email: "",
+    password: "",
+    password2: "",
   });
 
   enum RegisterError {
     PasswordTooShort = "Password must be at least 8 characters long.",
-    PasswordsDoNotMatch = "Passwords do not match."
+    PasswordsDoNotMatch = "Passwords do not match.",
   }
 
-const [error, setError] = useState<string | RegisterError | null>(null);
+  const [error, setError] = useState<string | RegisterError | null>(null);
 
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -35,7 +35,7 @@ const [error, setError] = useState<string | RegisterError | null>(null);
     return null; // No errors
   };
 
-  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const validationError = validateForm();
@@ -55,27 +55,33 @@ const [error, setError] = useState<string | RegisterError | null>(null);
       alert(response.message);
 
       //TODO redirect to login page
-      
-    
-} catch (err: unknown) {
-    // Check if the error is an instance of Error
-    if (err instanceof Error) {
-      setError(err.message); // Safely access the message property
-    } else {
-      setError("An unknown error occurred");
+    } catch (err: unknown) {
+      // Check if the error is an instance of Error
+      if (err instanceof Error) {
+        setError(err.message); // Safely access the message property
+      } else {
+        setError("An unknown error occurred");
+      }
     }
-  }
-};
+  };
+
   return (
     <div className="max-w-md mx-auto mt-10">
       <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
       {error && (
         <div className="bg-red-100 text-red-700 p-3 mb-4 rounded">
           <strong>Error:</strong> {error}
+        </div>
       )}
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      >
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="username"
+          >
             Username
           </label>
           <input
@@ -89,7 +95,10 @@ const [error, setError] = useState<string | RegisterError | null>(null);
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="email"
+          >
             E-Mail
           </label>
           <input
@@ -103,7 +112,10 @@ const [error, setError] = useState<string | RegisterError | null>(null);
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="password"
+          >
             Password
           </label>
           <input
@@ -117,7 +129,10 @@ const [error, setError] = useState<string | RegisterError | null>(null);
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password2">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="password2"
+          >
             Password <small>(repeat)</small>
           </label>
           <input
