@@ -33,7 +33,7 @@ export default function WeatherPage() {
 
   // Function to get highest temperature for the next 7 days
   const getMaxTemperatureForNextSevenDays = () => {
-    if (weather && weather.hourly) {
+    if (weather?.hourly) {
       const dailyTemperatures = [];
       const today = new Date();
 
@@ -58,7 +58,7 @@ export default function WeatherPage() {
 
   // Function to get hourly temperatures for today
   const getHourlyTemperaturesToday = () => {
-    if (weather && weather.hourly) {
+    if (weather?.hourly) {
       const todayTemperatures = weather.hourly.temperature_2m.slice(0, 24); // Current day
       return todayTemperatures.map((temp, index) => (
         <li key={index} className="flex justify-between p-1 border-b border-gray-200">
@@ -90,8 +90,8 @@ export default function WeatherPage() {
               <h2 className="text-xl font-bold mt-6">Højeste temperaturer for de næste 7 dage</h2>
               <ul className="text-lg text-gray-700 mb-4">
                 {getMaxTemperatureForNextSevenDays()?.map((item, index) => (
-                  <li key={index} className="flex justify-between p-1 border-b border-gray-200">
-                    {index === 0 ? "I dag" : <span>{item.date}</span>} <span>{index === 0 ? item.maxTemp.toFixed(1) + "°C" : item.maxTemp.toFixed(1) + "°C"}</span>
+                  <li key={item.date} className="flex justify-between p-1 border-b border-gray-200">
+                    {index === 0 ? "I dag" : <span>{item.date}</span>} <span> {item.maxTemp.toFixed(1) + "°C"}</span>
                   </li>
                 ))}
               </ul>
