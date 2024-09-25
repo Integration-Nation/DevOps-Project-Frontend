@@ -10,3 +10,4 @@ services:
       - "443:443"
     volumes:
       - /etc/letsencrypt/live/40-85-136-203.nip.io:/etc/letsencrypt/live/40-85-136-203.nip.io
+      - /etc/letsencrypt/archive/40-85-136-203.nip.io:/etc/letsencrypt/archive/40-85-136-203.nip.io
