@@ -11,10 +11,6 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface weatherResponse {
-  Weather: Weather;
-}
-
 export interface Weather {
   latitude: number;
   longitude: number;
