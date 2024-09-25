@@ -7,3 +7,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt/live/40-85-136-203.nip.io:/etc/letsencrypt/live/40-85-136-203.nip.io
