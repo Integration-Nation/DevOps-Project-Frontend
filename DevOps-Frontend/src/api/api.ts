@@ -91,4 +91,20 @@ async function login(loginRequest: LoginRequest) {
   return response.json();
 }
 
-export { getSearchResults, registerUser, login, getWeather };
+// log ud
+
+async function logout() {
+  const response = await fetch(`${endpoint}/api/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to logout");
+  }
+
+  return response.json();
+}
+export { getSearchResults, registerUser, login, getWeather, logout };
