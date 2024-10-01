@@ -95,7 +95,7 @@ async function login(loginRequest: LoginRequest) {
 
 async function logout() {
   const response = await fetch(`${endpoint}/api/logout`, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
