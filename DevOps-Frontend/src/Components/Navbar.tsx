@@ -1,5 +1,8 @@
-import { NavLink } from "react-router-dom";
+import  {NavLink}  from "react-router-dom";
+import AuthStatus from "../security/AuthStatus.tsx"; // Husk at importere AuthStatus
+
 export default function Navbar() {
+
   return (
     <nav>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -12,19 +15,14 @@ export default function Navbar() {
             <NavLink to="/register">
               <button
                 type="button"
-                className=" mx-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="mx-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Register
               </button>
             </NavLink>
-            <NavLink to="/login">
-              <button
-                type="button"
-                className="mx-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Login
-              </button>
-            </NavLink>
+
+            {/* AuthStatus Component Added Here */}
+            <AuthStatus />
 
             <button
               data-collapse-toggle="navbar-cta"
@@ -35,7 +33,7 @@ export default function Navbar() {
             >
               <span className="sr-only">Open main menu</span>
               <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
               </svg>
             </button>
           </div>
@@ -48,7 +46,6 @@ export default function Navbar() {
                   </a>
                 </NavLink>
               </li>
-
               <li>
                 <NavLink to="/weather">
                   <a
