@@ -1,4 +1,8 @@
+import { handleHttpErrors } from "../security/FetchUtils";
+
 const endpoint = import.meta.env.VITE_ENDPOINT;
+const LOGIN_URL = `${endpoint}/api/login`;
+const token = localStorage.getItem("token");
 
 export interface RegisterRequest {
   username: string;
@@ -9,6 +13,13 @@ export interface RegisterRequest {
 export interface LoginRequest {
   username: string;
   password: string;
+}
+
+export type User = { username: string; password: string; roles?: string[] };
+
+export interface LoginResponse {
+  username: string;
+  token: string;
 }
 
 export interface Weather {
@@ -35,9 +46,12 @@ export interface Hourly {
 }
 
 async function getWeather(latitude: string, longitude: string) {
-  const response = await fetch(`${endpoint}/api/weather?latitude=${latitude}&longitude=${longitude}`, {
-    method: "GET",
-  });
+  const response = await fetch(
+    `${endpoint}/api/weather?latitude=${latitude}&longitude=${longitude}`,
+    {
+      method: "GET",
+    }
+  );
 
   if (!response.ok) {
     throw new Error("Failed to fetch weather");
@@ -47,9 +61,14 @@ async function getWeather(latitude: string, longitude: string) {
 }
 
 async function getSearchResults(query: string, language: string = "en") {
-  const response = await fetch(`${endpoint}/api/search?q=${encodeURIComponent(query)}&language=${encodeURIComponent(language)}`, {
-    method: "GET",
-  });
+  const response = await fetch(
+    `${endpoint}/api/search?q=${encodeURIComponent(
+      query
+    )}&language=${encodeURIComponent(language)}`,
+    {
+      method: "GET",
+    }
+  );
 
   if (!response.ok) {
     throw new Error("Failed to fetch search results");
@@ -91,4 +110,44 @@ async function login(loginRequest: LoginRequest) {
   return response.json();
 }
 
-export { getSearchResults, registerUser, login, getWeather };
+const authProvider = {
+  isAuthenticated: false,
+  signIn(user_: LoginRequest): Promise<LoginResponse> {
+    const options: RequestInit = {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(user_),
+    };
+
+    return fetch(LOGIN_URL, options).then(handleHttpErrors);
+  },
+};
+
+// log ud
+
+async function logout() {
+  const response = await fetch(`${endpoint}/api/logout`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to logout");
+  }
+
+  return response.json();
+}
+export {
+  getSearchResults,
+  registerUser,
+  login,
+  getWeather,
+  logout,
+  authProvider,
+};
