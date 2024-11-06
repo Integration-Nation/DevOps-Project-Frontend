@@ -54,7 +54,7 @@ jobs:
           password: ${{ secrets.PAT }}
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/integration-nation/devops-project-frontend:latest .
+        run: cd DevOps-Frontend && docker build -t ghcr.io/integration-nation/devops-project-frontend:latest .
 
       - name: Push Docker image
         run: docker push ghcr.io/integration-nation/devops-project-frontend:latest
