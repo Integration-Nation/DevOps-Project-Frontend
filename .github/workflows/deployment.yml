@@ -55,11 +55,10 @@ jobs:
 
       - name: Build Docker image
         run: |
-          ls &&
-          cd DevOps-Frontend && docker build \
-           --build-arg VITE_ENDPOINT=${{ secrets.VITE_ENDPOINT }} \
-           -t ghcr.io/integration-nation/devops-project-frontend:latest \
-           -f DevOps-Frontend/Dockerfile DevOps-Frontend
+          docker build \
+            --build-arg VITE_ENDPOINT=${{ secrets.VITE_ENDPOINT }} \
+            -t ghcr.io/integration-nation/devops-project-frontend:latest \
+            -f DevOps-Frontend/Dockerfile DevOps-Frontend
 
       - name: Push Docker image
         run: docker push ghcr.io/integration-nation/devops-project-frontend:latest
