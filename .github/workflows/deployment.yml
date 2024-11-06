@@ -54,7 +54,11 @@ jobs:
           password: ${{ secrets.PAT }}
 
       - name: Build Docker image
-        run: cd DevOps-Frontend && docker build -t ghcr.io/integration-nation/devops-project-frontend:latest .
+        run: |
+          cd DevOps-Frontend && docker build \
+           --build-arg VITE_ENDPOINT=${{ secrets.VITE_ENDPOINT }} \
+           -t ghcr.io/integration-nation/devops-project-frontend:latest \
+           -f DevOps-Frontend/Dockerfile DevOps-Frontend
 
       - name: Push Docker image
         run: docker push ghcr.io/integration-nation/devops-project-frontend:latest

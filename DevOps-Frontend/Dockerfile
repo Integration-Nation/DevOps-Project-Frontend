@@ -1,5 +1,8 @@
 FROM node:18-alpine3.17 as build
 
+ARG VITE_ENDPOINT
+ENV VITE_ENDPOINT=${VITE_ENDPOINT}
+
 WORKDIR /app
 COPY . /app
 COPY .env /app
