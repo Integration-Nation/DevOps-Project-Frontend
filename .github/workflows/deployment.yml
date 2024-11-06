@@ -1,4 +1,37 @@
-name: Deployment
+# name: Deployment
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+
+# jobs:
+#   deploy:
+#     name: Deploy
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       - name: Setup SSH
+#         uses: webfactory/ssh-agent@v0.5.3
+#         with:
+#           ssh-private-key: ${{ secrets.PRIVATE_KEY }}
+
+#       - name: SSH Command
+#         run: |
+#           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} '
+#             cd ./${{ secrets.WORK_DIR }} &&
+#             git pull https://github.com/Integration-Nation/DevOps-Project-Frontend.git &&
+#             cd DevOps-Frontend &&
+#             pwd &&
+#             ls -a &&
+#             sudo docker-compose down && sudo docker-compose build --no-cache && sudo docker-compose up -d && sudo docker image prune -f
+#           '
+
+name: Deploy Workflow
 
 on:
   push:
@@ -7,26 +40,35 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
-    name: Deploy
+  build_and_push:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.5.3
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
         with:
-          ssh-private-key: ${{ secrets.PRIVATE_KEY }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT }}
 
+      - name: Build Docker image
+        run: docker build -t ghcr.io/integration-nation/devops-project-frontend:latest .
+
+      - name: Push Docker image
+        run: docker push ghcr.io/integration-nation/devops-project-frontend:latest
+
+  deploy:
+    needs: build_and_push
+    runs-on: ubuntu-latest
+    steps:
       - name: SSH Command
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} '
             cd ./${{ secrets.WORK_DIR }} &&
-            git pull https://github.com/Integration-Nation/DevOps-Project-Frontend.git &&
             cd DevOps-Frontend &&
             pwd &&
             ls -a &&
-            sudo docker-compose down && sudo docker-compose build --no-cache && sudo docker-compose up -d && sudo docker image prune -f
+            sudo docker-compose down && sudo docker-compose pull && sudo docker-compose up -d && sudo docker image prune -f
           '
