@@ -5,7 +5,6 @@ ENV VITE_ENDPOINT=${VITE_ENDPOINT}
 
 WORKDIR /app
 COPY . /app
-COPY .env /app
 
 RUN npm install
 RUN npm run build
